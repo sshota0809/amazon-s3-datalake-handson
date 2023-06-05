@@ -46,6 +46,8 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
  4. 続いて、 **[スタックの作成]** 画面の **[テンプレートの指定]** において、 **[テンプレートファイルのアップロード]** を選択し、 **[ファイルの選択]** をクリックし、ダウンロードしたテンプレート「 **1-minilake_ec2.yaml** 」を指定し、 **[次へ]** をクリックします。 
 
     **Asset** 資料：[1-minilake_ec2.yaml](asset/ap-northeast-1/1-minilake_ec2.yaml)
+
+#### ダウンロードしたテンプレート内の [Your Name] は自分の名前にすべて置き換えてください
   
  5. **[スタックの名前]** に 「 **handson-minilake-[Your Name]**（任意）」、 **[パラメータ]** の **[KeyPair]** に **Section1** で作成したキーペア「**handson.pem**（任意）」、もしくは既に作成済みの場合はそのキーペアを指定し、 **[RoleName]** に「 **handson-minilake-role-[Your Name]**（任意）」と入力し、 **[次へ]** をクリックします。  
  
