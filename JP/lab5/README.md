@@ -24,9 +24,9 @@ Redshift 用のネットワークを CloudFormation を用いて、構築しま�
  
      **Asset** 資料：[5-minilake_privatesubnet.yaml](asset/ap-northeast-1/5-minilake_privatesubnet.yaml)
 
- 4. **[スタックの名前]** に「 **handson-minilake-private-subnet**（任意）」、 **[EC2SecurityGroupId]** 、 **[VpcId]** には、これまでに作成したセキュリティグループと VPC を選択して、 **[次へ]** をクリックします。
+ 4. **[スタックの名前]** に「 **handson-minilake-private-subnet-[Your Name]**（任意）」、 **[EC2SecurityGroupId]** 、 **[VpcId]** には、これまでに作成したセキュリティグループと VPC を選択して、 **[次へ]** をクリックします。
 
- 5. オプションの **[タグ]** の画面で、 **[キー]** に「 **Name** 」、 **[値]** に「 **handson-minilake-private**（任意）」と入力し、 **[次へ]** をクリックします。
+ 5. オプションの **[タグ]** の画面で、 **[キー]** に「 **Name** 」、 **[値]** に「 **handson-minilake-private-[Your Name]**（任意）」と入力し、 **[次へ]** をクリックします。
  
  6. 最後の確認ページで内容を確認し、 **[スタックの作成]** をクリックします。数分ほど待つとプライベートサブネットが作成されます。
 
@@ -39,12 +39,12 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
 
  2. AWS マネジメントコンソールのサービス一覧から **Amazon Redshift** を選択し、画面左にある![kibana_pain](images/kibana_pain2.png)アイコンをクリックし、左ペインの **[設定]** を選択します。
 
- 3. 画面の下部にある **[サブネットグループの管理]** をクリックし、 **[クラスターサブネットグループの作成]** をクリックします。
+ 3. 画面の下部にある **[サブネットグループ]** をクリックし、 **[クラスターサブネットグループの作成]** をクリックします。
 
  4. 以下の値を入力し、**[このクラスターサブネットグループのサブネット]** にサブネットが追加されたことを確認したら **[クラスターサブネットグループの作成]** をクリックします。
 
-    - 名前：**handson-minilake-dwh**（任意）
-    - 説明：**dwh in my vpc**（任意）
+    - 名前：**handson-minilake-dwh-[Your Name]**（任意）
+    - 説明：**dwh in my vpc [Your Name]**（任意）
     - VPC ID：メモした「 **VPC ID** 」を選択
     - アベイラビリティゾーン：**ap-northeast-1a**
     - サブネットID：メモした「 **サブネット ID** 」を選択し、 **[追加]** をクリック
@@ -53,8 +53,8 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
  
  6. 以下の値を入力します。
 
-    - クラスター識別子：**handson-minilake-dwh**（任意）
-    - このクラスターを何に使用する予定ですか?：**本番稼働**
+    - クラスター識別子：**handson-minilake-dwh-[Your Name]**（任意）
+    - クラスターのサイズを選択する：**を選択します。**
     - ノードの種類：**dc2.large**
     - ノード：**1**
     - 管理者ユーザー名：**admin**（任意）
@@ -65,7 +65,7 @@ Redshift は利用可能になるまで時間がかかるので、最初に作�
  7. **[追加設定]** の **[デフォルトを使用]** のラジオボタンをオフにし、**[ネットワークとセキュリティ]** にて以下の値を入力します。
 
     - Virtual Private Cloud (VPC) : 以前メモした「 **VPC ID** 」を選択
-    - VPC セキュリティグループ : **handson-minilake-sg-private**（任意）
+    - VPC セキュリティグループ : **handson-minilake-sg-private-[Your Name]**（任意）
 
  8. **[設定の概要]** において推定コンピューティング料金を確認し、**[クラスターを作成]** をクリックします。クラスターの起動完了までに時間がかかる為、次の作業を続けます。  
 
@@ -97,7 +97,7 @@ EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehos
 
  1. AWS マネジメントコンソールのサービス一覧から **Kinesis** を選択し、 Kinesis Data Firehose の **[配信ストリームを作成]** をクリックします。
  
- 2. **[ソース]** に **[Direct PUT]** に **[送信先]** に「 Amazon S3」、そして **[配信ストリーム名]** に「 **minilake1**（任意）」と入力します。
+ 2. **[ソース]** に **[Direct PUT]** に **[送信先]** に「 Amazon S3」、そして **[配信ストリーム名]** に「 **minilake1-[Your Name]**（任意）」と入力します。
  
     **Note：** 「 **minilake1**（任意）」を異なる名前に指定した場合、後続の手順において、「 **/etc/td-agent/td-agent.conf** 」のファイルにある「 **delivery_stream_name minilake1** 」の指定を合わせて変更いただく必要があります。
  
@@ -117,9 +117,9 @@ EC2 上で出力されているログを Fluentd 経由で、Kinesi Data Firehos
 ## Section3：EC2 の設定変更
 ### Step1：IAM ロールのポリシー追加
 
-作成済の「 **handson-minilake**（任意）」の IAM ロールに以下のようにポリシーを追加します。EC2 から Kinesis Data Firehose にデータが連携できるように権限を追加します。 
+作成済の「 **handson-minilake-role-[Your Name]**（任意）」の IAM ロールに以下のようにポリシーを追加します。EC2 から Kinesis Data Firehose にデータが連携できるように権限を追加します。 
 
- 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-role**（任意）」のロール名をクリックします。
+ 1. AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-role-[Your Name]**（任意）」のロール名をクリックします。
  
  2. **[許可]** タブを選択し、 **[許可を追加]** をクリックし、 **[ポリシーをアタッチ]** をクリックします。
  
@@ -159,7 +159,9 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
  
  ```
  # cp -p /root/asset/5-td-agent2.conf /etc/td-agent/td-agent.conf
- ```   
+ ``` 
+
+ 2-2. 「 **/etc/td-agent/td-agent.conf** 」の中身の「 **delivery_stream_name minilake1** 」の行の **minilakte1** を作成した配信ストリーム名 **minilakte1-[Your Name]** に変更して保存する。
 
  #### 以下の手順からは、上記両方の場合において実施します。
  
@@ -175,7 +177,7 @@ Fluentd から Kinesis Data Firehose にログデータを送信するための�
    
       **Note：** 数分かかります。（S3のパスの例：20190927-handson-minilake-test01/minilake-in1/2019/09/27/13）
 
-   5. Kinesis Data Firehose の画面において、作成した **配信ストリーム** の「 **minilake1**（任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
+   5. Kinesis Data Firehose の画面において、作成した **配信ストリーム** の「 **minilake1-[Your Name]**（任意）」を選択し、 **[Monitoring]** タブをクリック、表示に時間がかかる為、次の手順に進みます。
    
 
 ## Section4：Redshift への接続
@@ -187,13 +189,9 @@ Redshift に接続できるか確認します。
  
  2. 作成したインスタンスへの接続情報を入力し、 **[データベースに接続]** をクリックします。
 
-    - クラスター：**handson-minilake-dwh**（任意）
+    - クラスター：**handson-minilake-dwh-[Your Name]**（任意）
     - データベース名：**dev**（任意）
     - データベースユーザー：**admin**（任意）
-    - パスワード： **MyPassword1**（任意）
- 
- 3. 左ペインにテーブル一覧が表示されれば、ログイン成功です。
-
 
 ### Step2：Redshift にデータロード
 
@@ -205,13 +203,13 @@ Redshift にデータをロードします。
 
  3. **[AmazonS3ReadOnlyAccess]** を選択して、 **[次へ]** をクリックします。
  
- 4. **[ロール名]** に「 **handson-minilake-dwh**（任意）」と入力し、 **[ロールを作成]** をクリックします。
+ 4. **[ロール名]** に「 **handson-minilake-dwh-[Your Name]**（任意）」と入力し、 **[ロールを作成]** をクリックします。
 
  5. 作成したロールの ARN は後で使用するのでメモしておきます。
 
- 6. **[Redshift Dashboard]** に戻り、画面左ペインの **[クラスター]** を選択し、作成した Redshift クラスター名（例：handson-minilake-dwh）をクリックします。 **[アクション]** から **[IAMロールの管理]** をクリックします。
+ 6. **[Redshift Dashboard]** に戻り、画面左ペインの **[クラスター]** を選択し、作成した Redshift クラスター名（例：handson-minilake-dwh-[Your Name]）をクリックします。 **[アクション]** から **[IAMロールの管理]** をクリックします。
 
- 7. さきほど作成した IAM ロール「 **handson-minilake-dwh**（任意）」を選択 **[IAMロールを関連付ける]** をクリックし **[変更を保存]** をクリックします。**クラスター** の画面で **[状態]** が **[変更中]** となっているため、 **[変更中]** が消えるまで待ちます。
+ 7. さきほど作成した IAM ロール「 **handson-minilake-dwh-[Your Name]**（任意）」を選択 **[IAMロールを関連付ける]** をクリックし **[変更を保存]** をクリックします。**クラスター** の画面で **[状態]** が **[変更中]** となっているため、 **[変更中]** が消えるまで待ちます。
 
   <img src="images/Lab5-Section4-Step2-7.png" >
 
@@ -265,7 +263,7 @@ Redshift にデータをロードします。
 
 ### Step3：Redshift Spectrum の使用
 
- 1. Redshift Spectrum のスキーマとデータベースを作成することができるように、以前作成した IAM ロールにポリシーを追加します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-dwh**（任意）」のロール名をクリックします。
+ 1. Redshift Spectrum のスキーマとデータベースを作成することができるように、以前作成した IAM ロールにポリシーを追加します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、「 **handson-minilake-dwh-[Your Name]**（任意）」のロール名をクリックします。
 
  2. **[許可]** タブを選択し、 **[許可を追加]** をクリックし、 **[ポリシーをアタッチ]** をクリックします。
 
@@ -278,7 +276,7 @@ Redshift にデータをロードします。
     **Asset** 資料：[5-cmd.txt](asset/ap-northeast-1/5-cmd.txt) 
 
  ```
- create external schema my_first_external_schema from data catalog database 'spectrumdb' iam_role '[IAM ROLE ARN]' create external database if not exists;
+ create external schema my_first_external_schema from data catalog database 'spectrumdb-[Your Name]' iam_role '[IAM ROLE ARN]' create external database if not exists;
  ```
 **Note：** **[IAM ROLE ARN]** には、 Section4 の Step2 でメモした値を入力します。
 
@@ -326,7 +324,7 @@ Redshift にデータをロードします。
   **Note：** **ADD PARTITION** 句の各パーティションの値は、 **LOCATION** 句の S3 バケットのパスのパーティションの値と合わせてください。  
 また、パーティションのタイプ、およびパーティションの追加方法については、[こちら](https://image.slidesharecdn.com/aws-blackbeltathena20170301-170301101854/95/aws-black-belt-online-seminar-2017-amazon-athena-29-638.jpg?cb=1498216689)を参照してください。     
 
- 8. AWS マネジメントコンソールのサービス一覧から **Athena** を選択し、データベースとして先程作成した「 **spectrumdb**（任意）」を選択すると、先程作成したテーブル 「**ec2log_external**（任意）」が存在することが確認できます。    
+ 8. AWS マネジメントコンソールのサービス一覧から **Athena** を選択し、データベースとして先程作成した「 **spectrumdb-[Your Name]**（任意）」を選択すると、先程作成したテーブル 「**ec2log_external**（任意）」が存在することが確認できます。    
 
     **Note：** このまま Athena からクエリすることもできます。
     
@@ -356,6 +354,8 @@ Redshift にデータをロードします。
 ### Step4：QuickSight の設定
 QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可視化を行います。
 
+#### QuickSight のアカウント有効化は同じ AWS アカウントを利用している場合、代表者一名が実施してください
+
 #### これまでの手順で、1~11を実施している場合はスキップ
 
  1. AWS マネジメントコンソールのサービス一覧から **QuickSight** を選択します。 QuickSight を初めて使う方はサインアップがまだされていない為、サインアップの画面が出るため、 **[Sign up for QuickSight]** をクリックします。  
@@ -374,7 +374,7 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
  6. **[セキュリティとアクセス権限]** をクリックします。  
 
- 7. **[QuickSight の AWS のサービスへのアクセス]** の **[Manage]** をクリックします。  
+ 7. **[QuickSight の AWS のサービスへのアクセス]** の **[管理]** をクリックします。  
 
  8. **[Amazon Athena]** にチェックを入れます（すでにチェックが入っている場合はそのままとします）。    
 
@@ -384,7 +384,15 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
  11. **[保存]** をクリックします。 
 
- #### 既に QuickSight を設定済みであれば、ここからスタート
+ 12. 画面右上のアイコンをクリックし、 **[QuickSight の管理]** をクリックします。
+
+ 13. **[ユーザーを管理]** をクリックし、**[ユーザーを招待]** をクリックします。
+
+ 14. 招待したいユーザーのメールアドレスをカンマ区切りで入力して **[+]** ボタンをクリックし、 **[ロール]** に **[作成者]** を設定して **[招待]** をクリックします。
+
+ 15. 各メンバーはメールで届いたアクティベーション用のリンクをクリックしてパスワードを入力後サインインしてください。 
+
+ #### 同様に代表者一名が、代表者が作成した Redshift リソース等を利用してデータセットを作成します
 	 - プライベートサブネットに配置している Redshift に、 QuickSight から接続できるよう設定していきます。  
 	 - QuickSight のプライベートサブネット内のリソースへのアクセス設定にはセキュリティグループを使用しますが、 EC2 などに設定するセキュリティグループとは使用感が異なり、インバウンド設定がアクセス先 Redshift からの戻り通信に対するアクセスコントロール設定として扱われます。  
 	 - QuickSight と VPC を接続する ENI が作成され、それに対して上記セキュリティグループをアタッチし、 Redshift のセキュリティグループとの通信を許可することによってプライベート接続を実現します。 
@@ -392,50 +400,51 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
   <img src="images/quicksight_vpc_setting.png" >
 	 
 
- 12. QuickSight 用の ENI に設定するセキュリティグループを作成します。 **[EC2 ダッシュボード]** の左ペインから **[セキュリティグループ]** を選択し、 **[セキュリティグループを作成]** をクリックします。
+ 16. QuickSight 用の ENI に設定するセキュリティグループを作成します。 **[EC2 ダッシュボード]** の左ペインから **[セキュリティグループ]** を選択し、 **[セキュリティグループを作成]** をクリックします。
 
- 13. **[セキュリティグループを作成]** 画面にて、以下の値を入力します。
+ 17. **[セキュリティグループを作成]** 画面にて、以下の値を入力します。
  
-	 - セキュリティグループ名：qs-rs-private-conn（任意）
+	 - セキュリティグループ名：qs-rs-private-conn-[Your Name]（任意）
 	 - 説明：任意
 	 - VPC：このハンズオンで作成した VPC
 
- 14. **[インバウンドルール]** で、 **[ルールの追加]** をクリックし、以下の値を入力し、 **[セキュリティグループを作成]** をクリックします。
+ 18. **[インバウンドルール]** で、 **[ルールの追加]** をクリックし、以下の値を入力し、 **[セキュリティグループを作成]** をクリックします。
 
 	 - タイプ：すべての TCP
 	 - プロトコル：TCP
 	 - ポート範囲：0 - 65535
-	 - ソース：カスタム | [Redshift に設定しているセキュリティグループ]（例：handson-minilake-sg-private）
+	 - ソース：カスタム | [Redshift に設定しているセキュリティグループ]（例：handson-minilake-sg-private-[Your Name]）
 
- 15. Redshift に設定しているセキュリティグループに、先程作成した、 QuickSight 用の ENI に設定するセキュリティグループからのインバウンドアクセスを許可する設定を追加します。 **[EC2ダッシュボード]** 画面の左ペインから **[セキュリティグループ]** をクリックし、 Redshift に設定しているセキュリティグループ（例：handson-minilake-sg-private）を選択し、 **[インバウンドルール]** タブで **[インバウンドルールを編集]** をクリックし、**[ルールの追加]** をクリックし、以下の値を入力して、 **[ルールを保存]** します。
+ 19. Redshift に設定しているセキュリティグループに、先程作成した、 QuickSight 用の ENI に設定するセキュリティグループからのインバウンドアクセスを許可する設定を追加します。 **[EC2ダッシュボード]** 画面の左ペインから **[セキュリティグループ]** をクリックし、 Redshift に設定しているセキュリティグループ（例：handson-minilake-sg-private-[Your Name]）を選択し、 **[インバウンドルール]** タブで **[インバウンドルールを編集]** をクリックし、**[ルールの追加]** をクリックし、以下の値を入力して、 **[ルールを保存]** します。
 
 	 - タイプ：Redshift
 	 - プロトコル：TCP
 	 - ポート範囲：5439
-	 - ソース：カスタム | 先程作成した QuickSight 用の ENI に設定したセキュリティグループ（例：qs-rs-private-conn）
+	 - ソース：カスタム | 先程作成した QuickSight 用の ENI に設定したセキュリティグループ（例：qs-rs-private-conn-[Your Name]）
 
- 16. QuickSight コンソールからプライベートサブネット内にある Redshift への接続設定を行っていきます。 画面右上のアイコンをクリックし、　**[QuickSight の管理]** をクリックします。  
+ 20. QuickSight コンソールからプライベートサブネット内にある Redshift への接続設定を行っていきます。 画面右上のアイコンをクリックし、　**[QuickSight の管理]** をクリックします。  
 
      **Note：** 東京リージョンとなっていない場合は、東京リージョンを選択します。
 
- 17. 画面左ペインの **[VPC 接続の管理]** をクリックします。
+ 21. 画面左ペインの **[VPC 接続の管理]** をクリックします。
 
- 18. **[VPC 接続の管理]** において、 **[VPC 接続の追加]** をクリックします。
+ 22. **[VPC 接続の管理]** において、 **[VPC 接続の追加]** をクリックします。
 
- 19. **[VPC 接続の追加]** 画面において以下を設定し、**[作成]** をクリックします。
+ 23. **[VPC 接続の追加]** 画面において以下を設定し、**[作成]** をクリックします。
 
-	 - VPC 接続名：private-vpc（任意）
+	 - VPC 接続名：private-vpc-[Your Name]（任意）
 	 - VPC ID：当ハンズオンで作成したVPC（例：handson-minilake）のVPC ID
-	 - サブネット ID：EC2 が存在するパブリックサブネット ID
-	 - セキュリティグループ ID：先程作成したセキュリティグループ ID（例：qs-rs-private-conn のセキュリティグループID）
+    - 実行ロール：TeamRole
+	 - サブネット ID：パブリックサブネット ID（a と d それぞれ指定）
+	 - セキュリティグループ ID：先程作成したセキュリティグループ ID（例：qs-rs-private-conn-[Your Name] のセキュリティグループID）
 
  20. 画面左上の **[QuickSight]** のロゴをクリックし、画面右上の **[新しい分析]** をクリックし、続けて **[新しいデータセット]** をクリックし、その後 **[Redshift 自動検出]** をクリックします。
 
  21. **[新規 Redshift データソース]** 画面にて、以下の値を入力し、 **[接続の検証]** をクリックし、ボタン名が **[検証済み]** に変われば接続可能となります。
 
-	- データソース名：private-redshift（任意）
-	- インスタンス ID：handson-minilake-dwh（任意）
-	- 接続タイプ：先程作成した VPC 接続（例：private-vpc）を選択
+	- データソース名：private-redshift-[Your Name]（任意）
+	- インスタンス ID：handson-minilake-dwh-[Your Name]（任意）
+	- 接続タイプ：先程作成した VPC 接続（例：private-vpc-[Your Name]）を選択
 	- データベース名：dev（任意）
 	- ユーザー名：admin（任意）
 	- パスワード：Redshift 用に設定したパスワード
@@ -454,6 +463,14 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
  **[完了想定画面]**
   <img src="images/Lab5-Section4-Step4-25.png">
+
+#### 代表者が作成したデータセットを招待されたメンバーが読み込みできるよう権限付与を行います
+
+ 26. **[データセット]** をクリックし、先ほど作成したデータセットのメニューをクリックし、**[許可を管理]** をクリックします
+
+ 27. **[ユーザーを招待]** をクリックし、各メンバーに対して **[閲覧者]** の権限を付与します
+
+#### データソースおよびデータセットが作成されると、招待された各メンバーは [分析] をクリックし、[新しい分析] をクリックすると、代表者が作成したデータセットを選択して分析の作成を行うことができます
 
 
 # Section5：まとめ

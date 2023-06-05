@@ -23,7 +23,7 @@ Resources:
       InstanceTenancy: default
       Tags:
       - Key: Name
-        Value: handson-minilake
+        Value: handson-minilake-[Your Name]
 # Create Public RouteTable
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -31,7 +31,7 @@ Resources:
       VpcId: !Ref MyVPC
       Tags:
       - Key: Name
-        Value: handson-minilake
+        Value: handson-minilake-[Your Name]
 # Create Public Subnet A
   PublicSubnetA:
     Type: AWS::EC2::Subnet
@@ -41,7 +41,16 @@ Resources:
       AvailabilityZone: "ap-northeast-1a"
       Tags:
       - Key: Name
-        Value: handson-minilake
+        Value: handson-minilake-[Your Name]
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.0.64/27
+      AvailabilityZone: "ap-northeast-1d"
+      Tags:
+      - Key: Name
+        Value: handson-minilake-[Your Name]
   PubSubnetARouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -53,7 +62,7 @@ Resources:
     Properties:
       Tags:
       - Key: Name
-        Value: handson-minilake
+        Value: handson-minilake-[Your Name]
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
@@ -89,11 +98,11 @@ Resources:
       IamInstanceProfile: !Ref InstanceProfile
       Tags:
         - Key: Name
-          Value: handson-minilake
+          Value: handson-minilake-[Your Name]
   MyEC2SecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: handson-minilake-sg
+      GroupName: handson-minilake-sg-[Your Name]
       GroupDescription: Enable SSH access via port 22
       VpcId: !Ref MyVPC
       SecurityGroupIngress:

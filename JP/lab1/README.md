@@ -18,6 +18,12 @@ AWS CloudFormation（以降、CloudFormation）にて、 Amazon VPC（以降、V
 
  2. AWS マネジメントコンソールのサービス一覧から **EC2** を選択します。 **[EC2 ダッシュボード]** の左ペインから **[キーペア]** をクリックし、 **[キーペアを作成]** ボタンをクリックし、**[名前]** に任意の値（例：handson）を入力し、 **[キーペアを作成]** をクリックします。操作しているパソコンに秘密鍵（例：handson.pem）がダウンロードされます。  
 
+ 3. 操作しているパソコンにダウンロードした秘密鍵のパーミッションを変更します。
+
+ ```
+$ chmod 400 [秘密鍵のパス]
+ ```  
+
     **Note：** 既存のキーペアを使われる場合は、こちらの手順は飛ばしてください。
 
 ## Section2：EC2 環境構築
@@ -41,9 +47,9 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
 
     **Asset** 資料：[1-minilake_ec2.yaml](asset/ap-northeast-1/1-minilake_ec2.yaml)
   
- 5. **[スタックの名前]** に 「 **handson-minilake**（任意）」、 **[パラメータ]** の **[KeyPair]** に **Section1** で作成したキーペア「**handson.pem**（任意）」、もしくは既に作成済みの場合はそのキーペアを指定し、 **[RoleName]** に「 **handson-minilake-role**（任意）」と入力し、 **[次へ]** をクリックします。  
+ 5. **[スタックの名前]** に 「 **handson-minilake-[Your Name]**（任意）」、 **[パラメータ]** の **[KeyPair]** に **Section1** で作成したキーペア「**handson.pem**（任意）」、もしくは既に作成済みの場合はそのキーペアを指定し、 **[RoleName]** に「 **handson-minilake-role-[Your Name]**（任意）」と入力し、 **[次へ]** をクリックします。  
  
- 6. オプションの **タグ** で、 **キー** に 「 **Name** 」 、 **値** に 「 **handson-minilake**（任意）」 と入力し、 **[次へ]** をクリックします。
+ 6. オプションの **タグ** で、 **キー** に 「 **Name** 」 、 **値** に 「 **handson-minilake-[Your Name]**（任意）」 と入力し、 **[次へ]** をクリックします。
  
  7. 最後の確認ページの内容を確認し、 確認ページ下部の「 **AWS CloudFormation によって IAM リソースがカスタム名で作成される場合があることを承認します。** 」にチェックを入れ **[スタックの作成]** をクリックします。数分ほど待つと EC2 一台ができあがり、 **/root/es-demo/testapp.log** にログ出力が始まります。
  
@@ -52,6 +58,10 @@ CloudFormation を使い、 VPC を作成し、作成された VPC にログを�
  8. EC2 へ **SSH ログインして root にスイッチし、** ログが2分おきに出力していることを確認します。  
  
     **Note：** EC2 のログイン方法については、[こちら](additional_info_lab1.md#EC2へのログイン方法)を参照ください。 EC2 の 接続先の IP アドレス情報につきましては、 **[CloudFormation]** の画面から、該当の CloudFormation のスタックを選択し、 **[出力]** のタブをクリックすると、 **[AllowIPAddress]** の情報から確認できます。
+
+```
+$ ssh -i [秘密鍵のパス] ec2-user@xxx.xxx.xxx.xxx
+```
 
  ```
  $ sudo su -

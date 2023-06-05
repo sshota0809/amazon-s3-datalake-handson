@@ -13,7 +13,7 @@ Resources:
       VpcId: !Ref VpcId
       Tags:
       - Key: Name
-        Value: handson-minilake-private-rt
+        Value: handson-minilake-private-rt-[Your Name]
 # Create Private Subnet A
   PrivateSubnet:
     Type: AWS::EC2::Subnet
@@ -23,7 +23,7 @@ Resources:
       AvailabilityZone: "ap-northeast-1a"
       Tags:
       - Key: Name
-        Value: handson-minilake-private-sub
+        Value: handson-minilake-private-sub-[Your Name]
 # Associate with Private subnet and route table for private subnet
   PriSubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -46,7 +46,7 @@ Resources:
       SubnetId: !Ref PrivateSubnet
       Tags:
       - Key: Name
-        Value: handson-minilake-nat
+        Value: handson-minilake-nat-[Your Name]
 # set NAT as default gateway on route table for private subnet
   myPrivateRoute:
     Type: AWS::EC2::Route
@@ -59,7 +59,7 @@ Resources:
   myRSSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: handson-minilake-sg-private
+      GroupName: handson-minilake-sg-private-[Your Name]
       GroupDescription: Enable SSH access via port 5439
       VpcId: !Ref VpcId
       SecurityGroupIngress:
