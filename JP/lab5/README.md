@@ -422,13 +422,13 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 	 - ポート範囲：5439
 	 - ソース：カスタム | 先程作成した QuickSight 用の ENI に設定したセキュリティグループ（例：qs-rs-private-conn-[Your Name]）
 
- 20. QuickSight で VPC 接続の管理を作成するための IAM ロールを作成します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、検索ボックスに **[aws-quicksight-service-role-v0]** と入力して、 **[aws-quicksight-service-role-v0]** をクリックします。
+ 20. Redshift から S3 にアクセスして、データをロードするための IAM ロールを作成します。 AWS マネジメントコンソールのサービス一覧から **IAM** を選択し、 **[Identity and Access Management (IAM)]** 画面の左ペインから **[ロール]** を選択し、 **[ロールの作成]** をクリックします。
 
- 21. **[許可]** タブを選択し、 **[許可を追加]** をクリックし、 **[ポリシーをアタッチ]** をクリックします。
+ 21. **[信頼されたエンティティタイプ]** において、 **[カスタム信頼ポリシー]** を選択し、 **["Principal"]** の **[{}]** の中に、 **["Service": "quicksight.amazonaws.com"]** を入力します。続いて、 **[次へ]** をクリックします。
+
+ 22. 検索ボックスで「 **ec2** 」と入れ検索し、  **[AmazonEC2FullAccess]** にチェックを入れ、 **[ポリシーをアタッチ]** をクリックします。  
  
- 22. 検索窓で「 **ec2** 」と入れ検索し、  **[AmazonEC2FullAccess]** にチェックを入れ、 **[ポリシーをアタッチ]** をクリックします。  
- 
- 23. 変更実施したロールの **[許可]** タブを選択し、 **[AmazonEC2FullAccess]** がアタッチされたことを確認します。
+ 23. **[ロール名]** に「 **handson-minilake-qs-[Your Name]**（任意）」と入力し、 **[ロールを作成]** をクリックします。
 
  24. QuickSight コンソールからプライベートサブネット内にある Redshift への接続設定を行っていきます。 画面右上のアイコンをクリックし、　**[QuickSight の管理]** をクリックします。  
 
