@@ -442,7 +442,7 @@ QuickSight から Redshift、Redshift Spectrum のテーブルに接続し、可
 
 	 - VPC 接続名：private-vpc-[Your Name]（任意）
 	 - VPC ID：当ハンズオンで作成したVPC（例：handson-minilake）のVPC ID
-    - 実行ロール：xxxxxxxx
+	 - 実行ロール：handson-minilake-qs-[Your Name]
 	 - サブネット ID：パブリックサブネット ID（a と d それぞれ指定）
 	 - セキュリティグループ ID：先程作成したセキュリティグループ ID（例：qs-rs-private-conn-[Your Name] のセキュリティグループID）
 
